@@ -1,0 +1,82 @@
+---
+title: "Pset1"
+Author: "Emily Dunn"
+format: pdf
+editor: visual
+execute: 
+  warning: FALSE
+tidy: TRUE
+---
+
+```{r setup, include = FALSE}
+
+library(tidyr);
+library(tidyverse);
+library(dplyr);
+library(ggplot2);
+library(tinytex);
+library(kableExtra);
+
+setwd("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Problem Sets")
+
+```
+
+## Problem #1
+
+```{r}
+
+# problem 1(a)
+vdem <- read_csv("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Datasets/V-Dem-Red.csv") 
+
+# problem 1(b)
+nrows <- nrow(vdem) # vdem has 26537 rows
+ncols <- ncol(vdem) # vdem has 20 columns
+
+# problem 1(c)
+
+vdem_trimmed <- vdem[, c("country_name", "year", "v2x_polyarchy", "v2x_libdem")] # base r version
+
+vdem_trimmed <- vdem %>%
+  dplyr::filter(year >= 2000 & year <= 2017) %>%
+  select(country_name, year, v2x_polyarchy, v2x_libdem) #tidyr version
+
+# problem 1(d)
+head(vdem_trimmed)
+(head.table <- vdem_trimmed %>%
+    head() %>%
+  kbl() )
+
+# problem 1(e)
+log.poly <- log(vdem_trimmed$v2x_polyarchy)
+log.lib <- log(vdem_trimmed$v2x_libdem)
+
+    ## base r verion
+vdem_trimmed$log_polyarchy <- log.poly 
+vdem_trimmed$log_libdem <- log.lib
+
+    ## tidyr version
+vdem_trimmed <- vdem_trimmed %>%
+  mutate(
+    log_polyarchy = log.poly,
+    log_libdem = log.lib
+  )
+
+# problem 1(f)
+
+sum.table <- vdem_trimmed %>%
+  summarise(v2x_polyarchy_mean = mean(v2x_polyarchy, na.rm = TRUE),
+            v2x_polyarchy_sd = sd(v2x_polyarchy, na.rm = TRUE),
+            v2x_polyarchy_max = max(v2x_polyarchy, na.rm = TRUE),
+            v2x_polyarchy_min = min(v2x_polyarchy, na.rm = TRUE),
+            v2x_libdem_mean = mean(v2x_libdem, na.rm = TRUE),
+            v2x_libdem_sd = sd(v2x_libdem, na.rm = TRUE),
+            v2x_libdem_max = max(v2x_libdem, na.rm = TRUE),
+            v2x_libdem_min = min(v2x_libdem, na.rm = TRUE),
+             ) 
+
+view(sum.table)
+
+
+
+
+```

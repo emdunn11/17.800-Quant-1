@@ -1,0 +1,98 @@
+---
+title: "R Notes; Math Camp 1"
+format: pdf
+editor: visual
+---
+
+```{r setup, include = FALSE}
+
+library(tidyr);
+library(tidyverse);
+library(dplyr);
+library(ggplot2);
+library(tinytex);
+
+setwd("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Notes")
+```
+
+# Day 1
+
+## Objects
+
+```{r}
+
+x <- 5 # create a variable, x, with value, 5
+y <- c(1:10) # create a vector with numbers 1 through 10
+z <- matrix(c(1:10), nrow = 5) # create a matrix with 1:10 across 5 rows
+```
+
+## Data Frames
+
+```{r}
+
+df <- data.frame(
+  name = c("Emily", "Andrea"),
+  age = c(26, 33)
+) # create a data frame with the name and age of yourself and the person to your right
+
+mean(y)
+```
+
+### Loading and Viewing Datasets
+
+```{r}
+
+sdi.dataset <- read_csv("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Datasets/SDI_2.0.csv")
+
+summary(sdi.dataset)
+head(sdi.dataset)
+
+```
+
+### Cleaning Datasets
+
+```{r}
+
+clean.SDI.datset <- sdi.dataset %>%
+  select("state", "year", "democracy_mcmc")  %>% # select state, year, and democracy_mcmc variables
+  dplyr::filter(year >= 2010) # filter observations to years 2010-2023
+```
+
+## Functions
+
+### Basics
+
+```{r}
+
+mean(y) # finds the average value of vector, y
+mean(df$age) # finds the average value of the variable, age in data frame, df
+```
+
+### Creating a Function
+
+```{r}
+
+my.mean <- function(x) {
+  sum(x)/length(x)
+} # builds a function to measure the mean of object, x
+
+my.mean(df$age)
+```
+
+## Packages
+
+### Important packages for Quant 1:
+
+-   tidyverse
+
+-   ggplot2
+
+-   dplyr
+
+-   kableExtra/gt - helpful for creating tables for presentation format
+
+-   modelsummary/stargazer - helpful for regression tables
+
+-   marginaleeffects - helpful for visualizing predictions from regressions
+
+-   sandwhich - helpful for special standard errors for regression
