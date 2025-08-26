@@ -2,6 +2,9 @@
 title: "R Notes; Math Camp 1"
 format: pdf
 editor: visual
+tidy: TRUE
+execute: 
+  warning: FALSE
 ---
 
 ```{r setup, include = FALSE}
@@ -11,11 +14,13 @@ library(tidyverse);
 library(dplyr);
 library(ggplot2);
 library(tinytex);
+library(palmerpenguins);
+library(ggthemes);
 
 setwd("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Notes")
 ```
 
-# Day 1
+# Day 1 – 25 Aug 
 
 ## Objects
 
@@ -96,3 +101,138 @@ my.mean(df$age)
 -   marginaleeffects - helpful for visualizing predictions from regressions
 
 -   sandwhich - helpful for special standard errors for regression
+
+# Day 2 – 26 Aug
+
+## Working w/ Vectors
+
+```{r, ifelse}
+
+x <- c(1:10) # create a vector with elements 1 through 10
+(greater_than_6 <- ifelse(x > 6, "Yes!", 
+                         "Not Greater Than 6")
+  ) # creates new vector that defines each element of x based on whether they're greater than 6 or not
+
+```
+
+## Working w/ Dataframes
+
+```{r}
+
+x.df <- as.tibble(x) # converts vector x to a dataframe/tibble, x.df
+
+l <- c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
+# creates vector, l, with letters a thorugh j
+
+x.l.df <- x.df %>%
+  mutate(letters = l) %>% # adds column, "letters" with values from vector, l
+  rename(numbers = value) # renames column "value" to "numbers"
+
+x.l.df[3,2] # indexes dataframe and returns value in the third row, second column
+
+x.l.df <- x.l.df %>% 
+  mutate(abbreviations = ifelse(numbers >=3, "ABC", 
+                                "XYZ") ) # adds new varibale, "abbreviations", where every value greater than or equal to 3 is "ABC", and all others are "ABC"
+
+```
+
+## Graphing in R
+
+### Exercise w/ Palmer Penguins
+
+```{r, base.graphing}
+
+penguins.df <- penguins
+
+plot.base <- plot(penguins$flipper_length_mm,
+                   penguins$body_mass_g,
+                  type = "p", xlab = "year", 
+                  ylab = "body mass", 
+                  main = "Penguins' Body Mass by Year") 
+```
+
+```{r, tidyr.graphing}
+
+(plot.tidy <- penguins.df %>%
+  ggplot(aes(x = bill_length_mm, y = body_mass_g) ) +
+    geom_point(aes(color = island)) +
+    labs(x = "Bill Length", y = "Body Mass", 
+         title = "Penguins' Bill Length by Body Mass")   ) # creates scatter plot where x is bill length, y is body mass, and color is island
+
+(plot.multi <- plot.tidy +
+    facet_wrap(~species)
+    ) # plot additional graphs ; grouping the data by species
+```
+
+## Loops & Self-Defined Functions
+
+```{r}
+ 
+module <- function(x) {
+  sqrt(x^2)
+} # creates self-defined function
+
+module(4) # test self-defined function
+
+my_mean <- function(x) {
+  sum(x)/length(x)
+}
+
+# SIMPLE LOOPS:
+start <- 1
+end <- 10
+for(i in start:end) {
+  print(i^2)
+} # for every value start to end, square each value
+
+# NESTED LOOPS:
+
+my_sequence <- c() # prep an empty dataset
+for(i in 1:10) {
+  for(j in c("A", "B", "C") ) {
+    my_sequence <- c(my_sequence, paste(
+      j, as.character(i), sep = "-"
+    ))
+  }
+} # for each i, 1 through 10, go through each j, A, B, and C and print the outputs as "i-j" in my_sequence
+
+# PRACTICE
+
+col.vec <- c("bill_length_nm", "bill_depth_nm",
+             "flipper_length_nm", "body_mass_g")
+
+# penguin.means <- for (col in col.vec) {
+#   mean(col, na.rm = TRUE)
+# }
+
+```
+
+## Simulations
+
+```{r}
+
+# COIN FLIP PROBLEM
+sims <- 10000
+heads <- c()
+
+set.seed(02139)
+
+for(i in 1:sims) {
+  heads[i] <- sample(c("Heads", "Tails"), 1 )
+}
+
+head(heads)
+sum(heads == "Heads")/length(heads) 
+
+# ROULETTE
+results <- c()
+roulette <- c(1:36)
+
+for(i in 1:1000) {
+  results <- sample(roulette, 1)
+  ifelse(results == 7, results[i] <- "win", "lose")
+}
+
+sum(results == "win")/length(results)
+sum(results == "win")
+```

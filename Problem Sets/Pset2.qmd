@@ -1,0 +1,67 @@
+---
+title: "Pset2"
+Author: "Emily Dunn"
+format: pdf
+editor: visual
+execute: 
+  warning: FALSE
+---
+
+```{r setup, include = FALSE}
+
+library(tidyr);
+library(tidyverse);
+library(dplyr);
+library(ggplot2);
+library(tinytex);
+library(kableExtra);
+library(ggthemes);
+library(palmerpenguins)
+
+setwd("/Users/oneone/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Problem Sets")
+
+```
+
+# Problem #1
+
+-   Single Variable Plot – Histogram of the "v2x_polyarchy" variable demonstrates the frequency of each value of the variable in the dataset.
+
+```{r}
+
+V_Dem.df <- read_csv("~/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Datasets/V-Dem-Red.csv")
+
+(single.plot <- hist(V_Dem.df$v2x_polyarchy)
+  )
+
+(bivariate.plot <- plot(V_Dem.df$year,
+                       V_Dem.df$v2x_polyarchy ) )
+
+(bivariate.plot <- V_Dem_Red %>%
+  ggplot(aes(x = v2x_polyarchy)) +
+  geom_histogram() )
+
+
+```
+
+# Problem 2
+
+```{r}
+
+(recreate.grob <- V_Dem.df %>%
+  dplyr::filter(country_name == "Argentina" |
+                  country_name == "Brazil") %>%
+  ggplot(aes(x = year, y = v2x_polyarchy) ) +
+  geom_line(aes(color = country_name) ) +
+  labs (x = "Year", y = "Polyarchy", "Democracy Level",
+        title = "Democracy Levels") +
+  theme_classic()  +
+    theme(legend.title = element_blank(),
+          legend.position = c(.1, 0.9),
+          plot.title = element_text(face = "bold")) +
+    scale_y_continuous(breaks = seq(0, .8, .2) ) +
+    scale_color_manual(values = c("Argentina" = "Red",
+                                  "Brazil" = "Blue") )
+  )
+
+  
+```
