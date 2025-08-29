@@ -17,7 +17,7 @@ library(tinytex);
 library(palmerpenguins);
 library(ggthemes);
 
-setwd("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Notes")
+setwd("~/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Notes")
 ```
 
 # Day 1 – 25 Aug
@@ -237,7 +237,7 @@ sum(results == "win")/length(results)
 sum(results == "win")
 ```
 
-# Day 3 – 27 Aug 
+# Day 3 – 27 Aug
 
 ## Commands for Matrix Algebra
 
@@ -252,3 +252,54 @@ sum(results == "win")
 -   Return a matrix cross-product from two matrices\* – crossprod()
 
     -   \*Matrix cross-product: X\^T(Y)
+
+# Day 5 - 29 Aug
+
+## Helpful Functions for Probabilities
+
+-   prop.table(table(...) ) – creates a probability of table
+
+-   rowSums(...) – if you plug a probability table into rowSums and designate a row (variable) using the \$ operator, you can calculate marginal probability
+
+-   colSums(...) – if you plug a probability table into colSums and designate a column (variable) using the \$ operator, you can calculate marginal probability
+
+-   To find a conditional probability...
+
+    -   you can index a probability table to find a specific row and column; P(x\|y) –\>
+
+        -   prop.table(table(df) ) \[1,1\] \*\*calculates the intersection
+
+        -   rowSums(prop.table(table(df) ) ) \[1\] \*\*calculates prob of y
+
+        -   divide the intersection by the prob of y to get your conditional probability
+
+-   Testing Independence...
+
+    -   use calculated joint and marginal probabilities to test if the joint probability is equal to the product of the two marginal probabilities
+
+```{r, probability.examples}
+
+income <- c(rep("middle_income", 40),
+            rep("low_income", 120), 
+            rep("high_income", 30) )
+polity <- c(rep("democracy", 120),
+            rep("autocracy", 70) )
+
+test.df <- data.frame(income,
+                      polity)
+
+(joint.prob <- prop.table(table(test.df) ) ) # produces a table of joint probabilities
+
+(marg.prob.autocracy <- colSums(joint.prob)[1] ) # calculates the marginal probability of autocracy
+
+# conditional probability
+# P(democracy | low_income)
+
+(joint.prob) # view the joint probabilities
+(intersection <- joint.prob[2,2] )# extract the intersection
+(prob.low_income <- rowSums(joint.prob)[2] ) # extract the probability of low_income
+(dem_given_low_income <- intersection %% 
+    prob.low_income ) # calculates intersection divided by the prob of low_income 
+
+
+```
