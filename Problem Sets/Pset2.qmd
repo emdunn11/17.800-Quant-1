@@ -9,6 +9,10 @@ execute:
 
 ```{r setup, include = FALSE}
 
+knitr::opts_chunk$set(echo = TRUE, tidy.opts = list(
+  width.cutoff = 50), tidy = T, cache = F, warning = F,
+  message = F)
+
 library(tidyr);
 library(tidyverse);
 library(dplyr);
@@ -18,7 +22,7 @@ library(kableExtra);
 library(ggthemes);
 library(palmerpenguins)
 
-setwd("/Users/oneone/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Problem Sets")
+setwd("/Users/oneone/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Problem Sets/")
 
 ```
 
@@ -33,12 +37,12 @@ V_Dem.df <- read_csv("~/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Datasets
 (single.plot <- hist(V_Dem.df$v2x_polyarchy)
   )
 
-(bivariate.plot <- plot(V_Dem.df$year,
-                       V_Dem.df$v2x_polyarchy ) )
+# (bivariate.plot <- plot(V_Dem.df$year,
+#                        V_Dem.df$v2x_polyarchy ) )
 
-(bivariate.plot <- V_Dem_Red %>%
-  ggplot(aes(x = v2x_polyarchy)) +
-  geom_histogram() )
+(bivariate.plot <- V_Dem.df %>%
+  ggplot(aes(x = year, y = v2x_polyarchy)) +
+  geom_point() )
 
 
 ```

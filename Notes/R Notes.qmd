@@ -20,7 +20,7 @@ library(ggthemes);
 setwd("/Users/oneone/Library/Mobile Documents/com~apple~CloudDocs/MIT/Fall 2025/Math Camp 1/Math Camp 1/Notes")
 ```
 
-# Day 1 – 25 Aug 
+# Day 1 – 25 Aug
 
 ## Objects
 
@@ -236,3 +236,19 @@ for(i in 1:1000) {
 sum(results == "win")/length(results)
 sum(results == "win")
 ```
+
+# Day 3 – 27 Aug 
+
+## Commands for Matrix Algebra
+
+-   Change data to a matrix – as.matrix()
+
+-   Transpose a matrix – t()
+
+-   Multiple (conformable) matrices – %\*%
+
+-   Find the inverse of a matrix – solve()
+
+-   Return a matrix cross-product from two matrices\* – crossprod()
+
+    -   \*Matrix cross-product: X\^T(Y)

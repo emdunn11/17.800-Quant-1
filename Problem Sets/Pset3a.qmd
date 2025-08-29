@@ -1,0 +1,48 @@
+---
+title: "Pset3a"
+author: "Emily Dunn"
+format: pdf
+editor: visual
+execute: 
+  warning: FALSE
+---
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, tidy.opts = list(
+  width.cutoff = 50), tidy = T, cache = F, warning = F,
+  message = F)
+
+library(tidyr);
+library(tidyverse);
+library(dplyr);
+library(ggplot2);
+library(tinytex);
+library(kableExtra);
+library(ggthemes);
+library(palmerpenguins)
+
+setwd("/Users/oneone/Documents/MIT Fall '25/17.800 Quant 1/Math Camp/Problem Sets/")
+
+```
+
+# 3a
+
+```{r}
+
+# Problem 1
+(integrate(function(x) 1/(x+5) *sqrt(x), upper = Inf, lower = 0)  )
+
+# integrate(function(x(exp(1)^x) ) ), upper = 0, lower = -Inf
+
+integrate(function(x) x * exp(1)^x, upper = 0, lower = -Inf)
+
+integrate(function(x) 1/sqrt(2*pi) * exp(1)^-x/2, upper = 1.96, lower = -1.96)
+```
+
+# 3b
+
+```{r}
+
+
+```
